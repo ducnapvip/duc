@@ -15,7 +15,31 @@
       margin-bottom: 30px;
       max-width: 700px;
       margin: auto;
-      background-color: #c56565;
+    .video-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  min-height: 100%;
+  overflow: hidden;
+  z-index: -1; /* để nằm sau nội dung */
+}
+
+.video-background video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+}
+<video autoplay muted loop playsinline>
+  <source src="1.mp4" type="video/mp4">
+</video>
+
     }
     textarea, input {
       width: 100%;
