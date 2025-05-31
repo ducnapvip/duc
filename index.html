@@ -34,22 +34,78 @@
       border-radius: 30px;
       min-height: 150px;
     }
-  </style>
+    </style>
 </head>
 <body>
-  <h2>🔗 Facebook Comment Link Generator</h2>
-
-  <label>Nhập các link Facebook (mỗi dòng 1 link):</label>
+</style>
+</head>
+<body>
+  <h2 
+style="
+  font-size: 32px;
+  font-weight: bold;
+  color: rgb(255, 255, 255);
+  text-shadow: 
+     0 0 10px #00a6ff,
+    0 0 15px #00a6ff,
+    0 0 20px #00649a,
+    0 0 25px #76c7ff;
+">🔗 Facebook Comment Link Generator</h2>
+ 
+  <label style="
+  font-weight: bold;
+  color: rgb(255, 255, 255);
+  text-shadow: 
+     0 0 10px #00a6ff,
+    0 0 15px #00a6ff,
+    0 0 20px #00649a,
+    0 0 25px #76c7ff;></labelstyle"> Nhập các link Facebook (mỗi dòng 1 link)</label>
   <textarea id="inputLinks" rows="8" placeholder="https://www.facebook.com/..."></textarea>
 
-  <label>Số lượng link muốn tạo cho mỗi link (bỏ trống = 100):</label>
+  <label style="
+  font-weight: bold;
+  color: rgb(255, 255, 255);
+  text-shadow: 
+     0 0 10px #00a6ff,
+    0 0 15px #00a6ff,
+    0 0 20px #00649a,
+    0 0 25px #76c7ff;></labelstyle">Số lượng link muốn tạo cho mỗi link (bỏ trống = 100):</label>
   <input type="number" id="linkCount" placeholder="VD: 50">
+<style>
+  button:hover {
+  background: linear-gradient(90deg, #ffffff, #d4fcf9, #e1d4fd, #ffd6f6);
+</style=>
 
-  <button onclick="generateLinks()">🚀 Tạo Link</button>
+  }
+     </style>
+  
+  <button onclick="generateLinks()" >Tạo Link </button>
   <button onclick="copyToClipboard()">📋 Sao chép tất cả</button>
-
-  <h3>Kết quả:</h3>
+  <h3 style="
+  font-weight: bold;
+  color: rgb(255, 255, 255);
+  text-shadow: 
+     0 0 10px #00a6ff,
+    0 0 15px #00a6ff,
+    0 0 20px #00649a,
+    0 0 25px #76c7ff;></labelstyle">Kết quả:</h3>
   <div id="output"></div>
+  <style>
+  #output {
+    max-width: 90%;        /* Không vượt quá khung cha */
+    margin: auto;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    min-height: 150px;
+    background-color: white;
+    overflow-x: auto;      /* Có thanh cuộn ngang nếu tràn */
+    word-wrap: break-word; /* Tự xuống dòng khi quá dài */
+    white-space: pre-wrap; /* Hiển thị xuống dòng đúng như trong text */
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  }
+</style>
+
 
   <script>
     function randomString(length) {
