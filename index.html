@@ -1,178 +1,201 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Facebook Comment Link Generator</title>
   <style>
-     body {
-      font-family: Arial, sans-serif;
-      margin: 40px auto;
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: url('2.jpg') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      padding: 30px;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(15px);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+      border-radius: 20px;
+      padding: 30px;
       max-width: 800px;
-      padding: 20px;
-      background-image: url('2.jpg');
-      border-radius: 30px;
-    }
-     textarea,input,button {
       width: 100%;
-      padding: 10px;
-      margin-top: 10px;
-      font-size: 14px;
-      border-radius: 30px;
     }
-    button  {
-      cursor: pointer;
-      margin-top: 10px;
-      background-color: aqua;
-      border-radius: 30px;
+
+    h2 {
+      font-size: 28px;
+      color: #fff;
+      text-shadow: 0 0 5px #00b4ff, 0 0 15px #0077ff;
+      margin-bottom: 20px;
+      text-align: center;
     }
-   #output {
-      white-space: pre-wrap;
+
+    label {
+      color: #fff;
+      font-weight: 600;
+      display: block;
       margin-top: 20px;
-      background: #f7f7f7;
+      margin-bottom: 5px;
+    }
+
+    textarea,
+    input {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.85);
+      font-size: 14px;
+      margin-bottom: 10px;
+      resize: vertical;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 12px;
+      font-weight: bold;
+      color: white;
+      background: linear-gradient(to right, #00c6ff, #0072ff);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      transform: scale(1.03);
+      background: linear-gradient(to right, #89f7fe, #66a6ff);
+      box-shadow: 0 4px 20px rgba(0, 174, 255, 0.3);
+    }
+
+    #output {
+      margin-top: 20px;
       padding: 15px;
-      border: 1px solid #ccc;
-      border-radius: 30px;
+      background-color: rgba(255, 255, 255, 0.9);
+      border-radius: 12px;
+      white-space: pre-wrap;
       min-height: 150px;
+      color: #333;
+      font-size: 14px;
+      box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
     }
-    </style>
-</head>
-<body>
-</style>
-</head>
-<body>
-  <h2 
-style="
-  font-size: 32px;
-  font-weight: bold;
-  color: rgb(255, 255, 255);
-  text-shadow: 
-     0 0 10px #00a6ff,
-    0 0 15px #00a6ff,
-    0 0 20px #00649a,
-    0 0 25px #76c7ff;
-">🔗 Facebook Comment Link Generator</h2>
- 
-  <label style="
-  font-weight: bold;
-  color: rgb(255, 255, 255);
-  text-shadow: 
-     0 0 10px #00a6ff,
-    0 0 15px #00a6ff,
-    0 0 20px #00649a,
-    0 0 25px #76c7ff;></labelstyle"> Nhập các link Facebook (mỗi dòng 1 link)</label>
-  <textarea id="inputLinks" rows="8" placeholder="https://www.facebook.com/..."></textarea>
 
-  <label style="
-  font-weight: bold;
-  color: rgb(255, 255, 255);
-  text-shadow: 
-     0 0 10px #00a6ff,
-    0 0 15px #00a6ff,
-    0 0 20px #00649a,
-    0 0 25px #76c7ff;></labelstyle">Số lượng link muốn tạo cho mỗi link (bỏ trống = 100):</label>
-  <input type="number" id="linkCount" placeholder="VD: 50">
-<style>
-  button:hover {
-  background: linear-gradient(90deg, #ffffff, #d4fcf9, #e1d4fd, #ffd6f6);
-</style=>
-
-  }
-     </style>
-  
-  <button onclick="generateLinks()" >Tạo Link </button>
-  <button onclick="copyToClipboard()">📋 Sao chép tất cả</button>
-  <h3 style="
-  font-weight: bold;
-  color: rgb(255, 255, 255);
-  text-shadow: 
-     0 0 10px #00a6ff,
-    0 0 15px #00a6ff,
-    0 0 20px #00649a,
-    0 0 25px #76c7ff;></labelstyle">Kết quả:</h3>
-  <div id="output"></div>
-  <style>
-  #output {
-    max-width: 90%;        /* Không vượt quá khung cha */
-    margin: auto;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 12px;
-    min-height: 150px;
-    background-color: white;
-    overflow-x: auto;      /* Có thanh cuộn ngang nếu tràn */
-    word-wrap: break-word; /* Tự xuống dòng khi quá dài */
-    white-space: pre-wrap; /* Hiển thị xuống dòng đúng như trong text */
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-  }
-</style>
-
-
-  <script>
-    function randomString(length) {
-      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-      let result = '';
-      for (let i = 0; i < length; i++) {
-        result += chars.charAt(Math.floor(Math.random() * chars.length));
+    @media (max-width: 600px) {
+      .container {
+        padding: 20px;
       }
-      return result;
+
+      h2 {
+        font-size: 22px;
+      }
     }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>🔗 Facebook Comment Link Generator</h2>
 
-    function generateLinks() {
-      const input = document.getElementById("inputLinks").value.trim();
-      let count = parseInt(document.getElementById("linkCount").value);
-      if (isNaN(count) || count <= 0) count = 100;
+    <label>Nhập các link Facebook (mỗi dòng 1 link)</label>
+    <textarea id="inputLinks" rows="6" placeholder="https://www.facebook.com/..."></textarea>
 
-      const lines = input.split("\n").map(line => line.trim()).filter(Boolean);
-      let allGeneratedLinks = [];
+    <label>Số lượng link muốn tạo cho mỗi link (bỏ trống = 100):</label>
+    <input type="number" id="linkCount" placeholder="VD: 50">
 
-      lines.forEach(originalUrl => {
-        try {
-          const url = new URL(originalUrl);
-          const comment_id = url.searchParams.get("comment_id") || "";
-          const pathParts = url.pathname.split("/").filter(Boolean);
+    <button onclick="generateLinks()">🚀 Tạo Link</button>
+    <button onclick="copyToClipboard()">📋 Sao chép tất cả</button>
 
-          if (pathParts.length < 3 || pathParts[1] !== "posts") {
-            allGeneratedLinks.push(`❌ URL không hợp lệ: ${originalUrl}`);
-            return;
-          }
+    <label style="margin-top: 25px;">Kết quả:</label>
+    <div id="output"></div>
+  </div>
 
-          const page = pathParts[0];
-          const original_post_id = pathParts[2];
+ <script>
+  function randomString(length) {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    for (let i = 0; i < length; i++) {
+      result += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return result;
+  }
 
-          if (!original_post_id.startsWith("pfbid")) {
-            allGeneratedLinks.push(`❌ Không tìm thấy post ID: ${originalUrl}`);
-            return;
-          }
+  function generateLinks() {
+    const input = document.getElementById("inputLinks").value.trim();
+    let count = parseInt(document.getElementById("linkCount").value);
+    if (isNaN(count) || count <= 0) count = 100;
 
-          const prefix = "pfbid";
-          const suffix = original_post_id.slice(prefix.length);
+    const lines = input.split("\n").map(line => line.trim()).filter(Boolean);
+    let allGeneratedLinks = [];
 
-          for (let i = 0; i < count; i++) {
-            const new_suffix = randomString(suffix.length);
-            const new_post_id = prefix + new_suffix;
-            const new_url = `https://www.facebook.com/${page}/posts/${new_post_id}&/${original_post_id}?comment_id=${comment_id}`;
-            allGeneratedLinks.push(new_url);
-          }
-        } catch (e) {
-          allGeneratedLinks.push(`❌ Lỗi xử lý URL: ${originalUrl}`);
+    let allCommentIds = [];
+    const linkData = [];
+
+    // Lưu thông tin từng link
+    lines.forEach(originalUrl => {
+      try {
+        const url = new URL(originalUrl);
+        const comment_id = url.searchParams.get("comment_id") || "";
+        const pathParts = url.pathname.split("/").filter(Boolean);
+
+        if (pathParts.length < 3 || pathParts[1] !== "posts") {
+          allGeneratedLinks.push(`❌ URL không hợp lệ: ${originalUrl}`);
+          return;
         }
-      });
 
-      // 🎲 Shuffle all links
-      for (let i = allGeneratedLinks.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [allGeneratedLinks[i], allGeneratedLinks[j]] = [allGeneratedLinks[j], allGeneratedLinks[i]];
+        const page = pathParts[0];
+        const original_post_id = pathParts[2];
+
+        if (!original_post_id.startsWith("pfbid")) {
+          allGeneratedLinks.push(`❌ Không tìm thấy post ID: ${originalUrl}`);
+          return;
+        }
+
+        allCommentIds.push(comment_id);
+        linkData.push({ page, original_post_id, comment_id });
+      } catch (e) {
+        allGeneratedLinks.push(`❌ Lỗi xử lý URL: ${originalUrl}`);
       }
+    });
 
-      document.getElementById("output").textContent = allGeneratedLinks.join("\n");
+    // Tạo link mới và trộn comment_id từ các link khác
+    linkData.forEach(({ page, original_post_id, comment_id }) => {
+      const prefix = "pfbid";
+      const suffix = original_post_id.slice(prefix.length);
+
+      const shuffledCommentIds = allCommentIds
+        .filter(id => id !== comment_id);
+      
+      for (let i = 0; i < count; i++) {
+        const new_suffix = randomString(suffix.length);
+        const new_post_id = prefix + new_suffix;
+        const random_comment_id = shuffledCommentIds.length > 0
+          ? shuffledCommentIds[Math.floor(Math.random() * shuffledCommentIds.length)]
+          : comment_id;
+
+        const new_url = `https://www.facebook.com/${page}/posts/${new_post_id}&/${original_post_id}?comment_id=${random_comment_id}`;
+        allGeneratedLinks.push(new_url);
+      }
+    });
+
+    // 🎲 Trộn kết quả
+    for (let i = allGeneratedLinks.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [allGeneratedLinks[i], allGeneratedLinks[j]] = [allGeneratedLinks[j], allGeneratedLinks[i]];
     }
 
-    function copyToClipboard() {
-      const text = document.getElementById("output").textContent;
-      navigator.clipboard.writeText(text).then(() => {
-        alert("📋 Đã sao chép toàn bộ link vào clipboard!");
-      });
-    }
-  </script>
+    document.getElementById("output").textContent = allGeneratedLinks.join("\n");
+  }
+  function copyToClipboard() {
+    const text = document.getElementById("output").textContent;
+    navigator.clipboard.writeText(text).then(() =>  {
+      alert("📋 Đã sao chép toàn bộ link vào clipboard!");
+    });
+  }
+</script>
+
 </body>
 </html>
