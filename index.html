@@ -2,213 +2,225 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8" />
-  <title>Facebook Comment Link Generator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tool Gộp Comment ID</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
+    * { box-sizing: border-box; }
+
     body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: url('2.jpg') no-repeat center center fixed;
+      font-family: 'Poppins', sans-serif;
+      background-image: url("2.jpg");
       background-size: cover;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      min-height: 100vh;
-      padding: 30px;
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-attachment: fixed;
+      padding: 40px 20px;
+      color: #f1f5f9;
+      font-size: 16px;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.75);
     }
 
     .container {
-      background: rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(4px);
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
-      border-radius: 20px;
+      max-width: 900px;
+      margin: auto;
+      background: rgba(255, 255, 255, 0.01);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(12px);
       padding: 30px;
-      max-width: 800px;
-      width: 100%;
+      border-radius: 20px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
     }
 
     h2 {
-      font-size: 28px;
-      color: #fff;
-      text-shadow: 0 0 5px #00b4ff, 0 0 15px #0077ff;
-      margin-bottom: 20px;
       text-align: center;
+      margin-bottom: 25px;
+      color: #60a5fa;
+      font-weight: 700;
+      font-size: 28px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     }
 
     label {
-      color: #fff;
-      font-weight: 600;
       display: block;
-      margin-top: 20px;
-      margin-bottom: 5px;
+      margin: 16px 0 6px;
+      font-weight: 600;
+      font-size: 15px;
+      color: #e2e8f0;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.6);
     }
 
-    textarea,
-    input {
+    textarea {
       width: 100%;
-      padding: 12px;
-      border: none;
+      min-height: 110px;
+      padding: 12px 14px;
       border-radius: 12px;
-      background: rgba(255, 255, 255, 0.85);
-      font-size: 14px;
-      margin-bottom: 10px;
+      border: 1px solid #d1d5db;
       resize: vertical;
+      font-size: 14px;
+      background-color: rgba(255, 255, 255, 0.08);
+      color: #f1f5f9;
+      backdrop-filter: blur(3px);
+    }
+
+    textarea:focus {
+      border-color: #3b82f6;
+      outline: none;
+    }
+
+    .button-group {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      margin-top: 20px;
+      gap: 10px;
     }
 
     button {
-      width: 100%;
-      padding: 12px;
-      margin-top: 10px;
-      border: none;
-      border-radius: 12px;
-      font-weight: bold;
+      background: linear-gradient(135deg, #4facfe, #00f2fe);
       color: white;
-      background: linear-gradient(to right, #00c6ff, #0072ff);
+      border: none;
+      padding: 12px 24px;
+      font-size: 16px;
+      border-radius: 30px;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      flex: 1 1 48%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
     }
 
     button:hover {
-      transform: scale(1.03);
-      background: linear-gradient(to right, #89f7fe, #66a6ff);
-      box-shadow: 0 4px 20px rgba(0, 174, 255, 0.3);
+      transform: scale(1.05);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
     }
 
-    #output {
-  margin-top: 20px;
-  padding: 15px;
-  background-color: rgba(255, 255, 255, 0.9);
-  border-radius: 12px;
-  white-space: pre-wrap;
-  color: #333;
-  font-size: 14px;
-  box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
-  max-height: 300px;         /* ✅ Giới hạn chiều cao */
-  overflow-y: auto;          /* ✅ Cho phép cuộn dọc */
-  overflow-x: auto;          /* ✅ Cuộn ngang nếu quá dài */
-}
+    .result, .history {
+      margin-top: 30px;
+    }
 
+    .result textarea {
+      height: 200px;
+      background: rgba(255, 255, 255, 0.08);
+      font-family: 'Poppins', sans-serif;
+      border-radius: 12px;
+      border: 1px solid #d1d5db;
+      padding: 12px 14px;
+      color: #f1f5f9;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+    }
 
+    .history-item {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid #ccc;
+      margin-bottom: 10px;
+      border-radius: 10px;
+      padding: 10px;
+      cursor: pointer;
+    }
 
-    #stats {
-      margin-top: 15px;
-      font-weight: bold;
-      color: #fff;
+    .history-content {
+      display: none;
+      margin-top: 10px;
+    }
+
+    .delete-button {
+      background: #ef4444;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      font-size: 13px;
+      border-radius: 8px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+
+    iframe {
+      display: block;
+      margin: 20px auto 0;
+      border-radius: 12px;
+      width: 100%;
+      max-width: 560px;
+      height: 315px;
+    }
+
+    .note {
       text-align: center;
+      font-size: 14px;
+      color: #cbd5e1;
+      margin-top: 10px;
+      text-shadow: none;
     }
 
     @media (max-width: 600px) {
-      .container {
-        padding: 20px;
+      .button-group {
+        flex-direction: column;
       }
-
-      h2 {
-        font-size: 22px;
+      button {
+        flex: 1 1 100%;
+        margin-bottom: 10px;
       }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h2>🔗 Facebook Comment Link Generator</h2>
+    <h2>🎯 Tool Gộp Comment ID vào Link</h2>
 
-    <label>Nhập các link Facebook (mỗi dòng 1 link)</label>
-    <textarea id="inputLinks" rows="6" placeholder="https://www.facebook.com/..."></textarea>
+    <label for="linkInput">Nhập link bài viết Facebook (định dạng chuẩn):</label>
+    <textarea id="linkInput" placeholder="https://www.facebook.com/username/posts/123456789..."></textarea>
 
-    <label>Số lượng link muốn tạo cho mỗi link (bỏ trống = 100):</label>
-    <input type="number" id="linkCount" placeholder="VD: 50">
+    <label for="idInput">Nhập danh sách ID Comment (mỗi ID một dòng):</label>
+    <textarea id="idInput" placeholder="10001234567890\n10009876543210..."></textarea>
 
-    <button onclick="generateLinks()">🚀 Tạo Link</button>
-    <button onclick="copyToClipboard()">📋 Sao chép tất cả</button>
+    <div class="button-group">
+      <button onclick="processLinks()">
+        <span>➡️</span><span>Tạo link mới</span>
+      </button>
+      <button onclick="copyResults()">
+        <span>📋</span><span>Copy tất cả</span>
+      </button>
+    </div>
 
-    <div id="stats"></div> <!-- ✅ Hiển thị số lượng -->
+    <div class="result">
+      <label for="output">Kết quả:</label>
+      <textarea id="output" readonly placeholder="Kết quả sẽ hiển thị ở đây..."></textarea>
+    </div>
 
-    <label style="margin-top: 25px;">Kết quả:</label>
-    <div id="output"></div>
+    <h3 style="text-align:center; margin-top:30px; color:#f1f5f9;">🎵 Playlist YouTube: Lofi Chill</h3>
+    <iframe src="https://www.youtube.com/embed/videoseries?list=PL8Re_5qcK_MzGi2beUMlfy-VC0GZ1zwEW&autoplay=1" frameborder="0" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; picture-in-picture"></iframe>
+
+    <div class="note">
+      🔊 Mẹo: Nếu bạn muốn vừa làm việc vừa nghe nhạc, <b>nhấn chuột phải</b> vào nút phát phía trên và chọn <i>"Mở trong tab mới"</i>. Tab mới sẽ phát nhạc liên tục mà không bị gián đoạn.
+    </div>
   </div>
 
   <script>
-    function randomString(length) {
-      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-      let result = '';
-      for (let i = 0; i < length; i++) {
-        result += chars.charAt(Math.floor(Math.random() * chars.length));
-      }
-      return result;
+    function processLinks() {
+      const link = document.getElementById("linkInput").value.trim();
+      const ids = document.getElementById("idInput").value.trim().split(/\n+/);
+      const result = ids.map(id => `${link}?comment_id=${id}`).join("\n");
+      document.getElementById("output").value = result;
     }
 
-    function generateLinks() {
-      const input = document.getElementById("inputLinks").value.trim();
-      let count = parseInt(document.getElementById("linkCount").value);
-      if (isNaN(count) || count <= 0) count = 100;
-
-      const lines = input.split("\n").map(line => line.trim()).filter(Boolean);
-      let allGeneratedLinks = [];
-
-      let allCommentIds = [];
-      const linkData = [];
-
-      lines.forEach(originalUrl => {
-        try {
-          const url = new URL(originalUrl);
-          const comment_id = url.searchParams.get("comment_id") || "";
-          const pathParts = url.pathname.split("/").filter(Boolean);
-
-          if (pathParts.length < 3 || pathParts[1] !== "posts") {
-            allGeneratedLinks.push(`❌ URL không hợp lệ: ${originalUrl}`);
-            return;
-          }
-
-          const page = pathParts[0];
-          const original_post_id = pathParts[2];
-
-          if (!original_post_id.startsWith("pfbid")) {
-            allGeneratedLinks.push(`❌ Không tìm thấy post ID: ${originalUrl}`);
-            return;
-          }
-
-          allCommentIds.push(comment_id);
-          linkData.push({ page, original_post_id, comment_id });
-        } catch (e) {
-          allGeneratedLinks.push(`❌ Lỗi xử lý URL: ${originalUrl}`);
-        }
-      });
-
-      // Tạo link mới với comment_id ngẫu nhiên
-      linkData.forEach(({ page, original_post_id, comment_id }) => {
-        const prefix = "pfbid";
-        const suffix = original_post_id.slice(prefix.length);
-        const shuffledCommentIds = allCommentIds.filter(id => id !== comment_id);
-
-        for (let i = 0; i < count; i++) {
-          const new_suffix = randomString(suffix.length);
-          const new_post_id = prefix + new_suffix;
-          const random_comment_id = shuffledCommentIds.length > 0
-            ? shuffledCommentIds[Math.floor(Math.random() * shuffledCommentIds.length)]
-            : comment_id;
-
-          const new_url = `https://www.facebook.com/${page}/posts/${new_post_id}&/${original_post_id}?comment_id=${random_comment_id}`;
-          allGeneratedLinks.push(new_url);
-        }
-      });
-
-      // Trộn kết quả
-      for (let i = allGeneratedLinks.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [allGeneratedLinks[i], allGeneratedLinks[j]] = [allGeneratedLinks[j], allGeneratedLinks[i]];
+    function copyResults() {
+      const output = document.getElementById("output").value;
+      if (!output.trim()) {
+        alert("Không có nội dung để copy!");
+        return;
       }
 
-      // Hiển thị kết quả
-      document.getElementById("output").textContent = allGeneratedLinks.join("\n");
-
-      // ✅ Cập nhật số lượng thống kê
-      document.getElementById("stats").innerHTML = `📥 Số link nhập vào: <b>${lines.length}</b> | 📤 Số link tạo ra: <b>${allGeneratedLinks.length}</b>`;
-    }
-
-    function copyToClipboard() {
-      const text = document.getElementById("output").textContent;
-      navigator.clipboard.writeText(text).then(() => {
-        alert("📋 Đã sao chép toàn bộ link vào clipboard!");
-      });
+      navigator.clipboard.writeText(output)
+        .then(() => {
+          alert("✅ Đã copy kết quả vào clipboard!");
+        })
+        .catch(err => {
+          console.error("Lỗi khi copy:", err);
+          alert("❌ Không thể copy. Hãy copy thủ công.");
+        });
     }
   </script>
 </body>
