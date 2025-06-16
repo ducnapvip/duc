@@ -98,44 +98,19 @@
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
     }
 
-    .result, .history {
+    .result {
       margin-top: 30px;
     }
 
     .result textarea {
       height: 200px;
-      background: rgba(255, 255, 255, 0.08);
-      font-family: 'Poppins', sans-serif;
-      border-radius: 12px;
-      border: 1px solid #d1d5db;
-      padding: 12px 14px;
-      color: #f1f5f9;
-      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
     }
 
-    .history-item {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid #ccc;
-      margin-bottom: 10px;
-      border-radius: 10px;
-      padding: 10px;
-      cursor: pointer;
-    }
-
-    .history-content {
-      display: none;
+    #countResult {
       margin-top: 10px;
-    }
-
-    .delete-button {
-      background: #ef4444;
-      color: white;
-      border: none;
-      padding: 6px 12px;
-      font-size: 13px;
-      border-radius: 8px;
-      margin-top: 10px;
-      cursor: pointer;
+      font-weight: 600;
+      color: #93c5fd;
+      font-size: 14px;
     }
 
     iframe {
@@ -159,9 +134,9 @@
       .button-group {
         flex-direction: column;
       }
+
       button {
         flex: 1 1 100%;
-        margin-bottom: 10px;
       }
     }
   </style>
@@ -174,7 +149,7 @@
     <textarea id="linkInput" placeholder="https://www.facebook.com/username/posts/123456789..."></textarea>
 
     <label for="idInput">Nhập danh sách ID Comment (mỗi ID một dòng):</label>
-    <textarea id="idInput" placeholder="10001234567890\n10009876543210..."></textarea>
+    <textarea id="idInput" placeholder="10001234567890&#10;10009876543210..."></textarea>
 
     <div class="button-group">
       <button onclick="processLinks()">
@@ -188,10 +163,13 @@
     <div class="result">
       <label for="output">Kết quả:</label>
       <textarea id="output" readonly placeholder="Kết quả sẽ hiển thị ở đây..."></textarea>
+      <div id="countResult"></div>
     </div>
 
     <h3 style="text-align:center; margin-top:30px; color:#f1f5f9;">🎵 Playlist YouTube: Lofi Chill</h3>
-    <iframe src="https://www.youtube.com/embed/videoseries?list=PL8Re_5qcK_MzGi2beUMlfy-VC0GZ1zwEW" frameborder="0" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; picture-in-picture"></iframe>
+    <iframe src="https://www.youtube.com/embed/videoseries?list=PL8Re_5qcK_MzGi2beUMlfy-VC0GZ1zwEW"
+      frameborder="0" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; picture-in-picture">
+    </iframe>
 
     <div class="note">
       🔊 Nếu bạn dùng điện thoại và không chọn được bài từ playlist: <br />
@@ -202,9 +180,21 @@
   <script>
     function processLinks() {
       const link = document.getElementById("linkInput").value.trim();
-      const ids = document.getElementById("idInput").value.trim().split(/\n+/);
-      const result = ids.map(id => `${link}?comment_id=${id}`).join("\n");
-      document.getElementById("output").value = result;
+      const ids = document.getElementById("idInput").value.trim().split(/\n+/).filter(Boolean);
+      const resultBox = document.getElementById("output");
+      const countBox = document.getElementById("countResult");
+
+      const isInvalid = /\/(videos|reels?)\//.test(link);
+
+      if (isInvalid) {
+        resultBox.value = "";
+        countBox.innerText = "❌ Link không hợp lệ vì chứa /videos/ hoặc /reel(s)/. Vui lòng nhập link bài viết.";
+        return;
+      }
+
+      const links = ids.map(id => `${link}?comment_id=${id}`);
+      resultBox.value = links.join("\n");
+      countBox.innerText = `✅ Đã tạo ${links.length} link comment thành công.`;
     }
 
     function copyResults() {
