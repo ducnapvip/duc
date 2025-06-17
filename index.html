@@ -184,11 +184,11 @@
       const resultBox = document.getElementById("output");
       const countBox = document.getElementById("countResult");
 
-      const isInvalid = /\/(videos|reels?)\//.test(link);
+      const invalidPatterns = /\/(videos|reels?)\/|\/watch(\?|\/)/i;
 
-      if (isInvalid) {
+      if (invalidPatterns.test(link)) {
         resultBox.value = "";
-        countBox.innerText = "❌ Link không hợp lệ vì chứa /videos/ hoặc /reel(s)/. Vui lòng nhập link bài viết.";
+        countBox.innerText = "❌ Link không hợp lệ do chứa /videos/, /reels/, hoặc /watch/. Vui lòng nhập link bài viết.";
         return;
       }
 
