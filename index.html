@@ -184,17 +184,17 @@
       const resultBox = document.getElementById("output");
       const countBox = document.getElementById("countResult");
 
-      const invalidPatterns = /\/(videos|reels?)\/|\/watch(\?|\/)/i;
+      const invalidPattern = /\/(videos|reels?)\/|\/watch(\?|\/)/i;
 
-      if (invalidPatterns.test(link)) {
+      if (invalidPattern.test(link)) {
+        countBox.innerText = "⚠️ Link đã bị bỏ qua vì không hợp lệ (videos, reels, watch).";
         resultBox.value = "";
-        countBox.innerText = "❌ Link không hợp lệ do chứa /videos/, /reels/, hoặc /watch/. Vui lòng nhập link bài viết.";
         return;
       }
 
       const links = ids.map(id => `${link}?comment_id=${id}`);
       resultBox.value = links.join("\n");
-      countBox.innerText = `✅ Đã tạo ${links.length} link comment thành công.`;
+      countBox.innerText = `✅ Đã tạo ${links.length} link comment hợp lệ.`;
     }
 
     function copyResults() {
