@@ -4,74 +4,49 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Tool Gộp Comment ID</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    * { box-sizing: border-box; }
-
     body {
       font-family: 'Poppins', sans-serif;
-      background-image: url("2.jpg");
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-position: center center;
-      background-attachment: fixed;
+      background: linear-gradient(to right, #e0eafc, #cfdef3);
       padding: 40px 20px;
-      color: #f1f5f9;
-      font-size: 16px;
-      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.75);
+      color: #333;
     }
 
     .container {
       max-width: 900px;
       margin: auto;
-      background: rgba(255, 255, 255, 0.01);
-      backdrop-filter: blur(5px);
-      -webkit-backdrop-filter: blur(12px);
+      background: white;
       padding: 30px;
       border-radius: 20px;
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
     }
 
     h2 {
       text-align: center;
       margin-bottom: 25px;
-      color: #60a5fa;
-      font-weight: 700;
-      font-size: 28px;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      color: #4A90E2;
     }
 
     label {
       display: block;
       margin: 16px 0 6px;
       font-weight: 600;
-      font-size: 15px;
-      color: #e2e8f0;
-      text-shadow: 1px 1px 2px rgba(0,0,0,0.6);
     }
 
     textarea {
       width: 100%;
       min-height: 110px;
-      padding: 12px 14px;
+      padding: 12px;
       border-radius: 12px;
-      border: 1px solid #d1d5db;
+      border: 1px solid #ccc;
       resize: vertical;
       font-size: 14px;
-      background-color: rgba(255, 255, 255, 0.08);
-      color: #f1f5f9;
-      backdrop-filter: blur(3px);
-    }
-
-    textarea:focus {
-      border-color: #3b82f6;
-      outline: none;
     }
 
     .button-group {
       display: flex;
-      flex-wrap: wrap;
       justify-content: space-between;
+      flex-wrap: wrap;
       margin-top: 20px;
       gap: 10px;
     }
@@ -84,134 +59,107 @@
       font-size: 16px;
       border-radius: 30px;
       cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      transition: 0.2s;
       flex: 1 1 48%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
     }
 
     button:hover {
       transform: scale(1.05);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
     }
 
     .result {
       margin-top: 30px;
     }
-
-    .result textarea {
-      height: 200px;
-    }
-
-    #countResult {
-      margin-top: 10px;
-      font-weight: 600;
-      color: #93c5fd;
-      font-size: 14px;
-    }
-
-    iframe {
-      display: block;
-      margin: 20px auto 0;
-      border-radius: 12px;
-      width: 100%;
-      max-width: 560px;
-      height: 315px;
-    }
-
-    .note {
-      text-align: center;
-      font-size: 14px;
-      color: #cbd5e1;
-      margin-top: 10px;
-      text-shadow: none;
-    }
-
-    @media (max-width: 600px) {
-      .button-group {
-        flex-direction: column;
-      }
-
-      button {
-        flex: 1 1 100%;
-      }
-    }
   </style>
 </head>
 <body>
   <div class="container">
-    <h2>🎯 Tool Gộp Comment ID vào Link</h2>
+    <h2>🎯 Tool Gộp Comment ID Tự Động</h2>
 
-    <label for="linkInput">Nhập link bài viết Facebook (định dạng chuẩn):</label>
-    <textarea id="linkInput" placeholder="https://www.facebook.com/username/posts/123456789..."></textarea>
+    <label for="sourceLinks">Dán các link Facebook có chứa comment_id (mỗi dòng 1 link):</label>
+    <textarea id="sourceLinks" placeholder="https://www.facebook.com/...comment_id=123456789"></textarea>
 
-    <label for="idInput">Nhập danh sách ID Comment (mỗi ID một dòng):</label>
-    <textarea id="idInput" placeholder="10001234567890&#10;10009876543210..."></textarea>
+    <label for="targetLinks">Dán các link bài viết cần gắn comment_id (mỗi dòng 1 link):</label>
+    <textarea id="targetLinks" placeholder="https://www.facebook.com/username/posts/123456..."></textarea>
 
     <div class="button-group">
-      <button onclick="processLinks()">
-        <span>➡️</span><span>Tạo link mới</span>
-      </button>
-      <button onclick="copyResults()">
-        <span>📋</span><span>Copy tất cả</span>
-      </button>
+      <button onclick="processLinks()">➡️ Tạo link mới</button>
+      <button onclick="copyResults()">📋 Copy tất cả</button>
     </div>
 
     <div class="result">
-      <label for="output">Kết quả:</label>
+      <label for="output">✅ Kết quả:</label>
       <textarea id="output" readonly placeholder="Kết quả sẽ hiển thị ở đây..."></textarea>
-      <div id="countResult"></div>
-    </div>
-
-    <h3 style="text-align:center; margin-top:30px; color:#f1f5f9;">🎵 Playlist YouTube: Lofi Chill</h3>
-    <iframe src="https://www.youtube.com/embed/videoseries?list=PL8Re_5qcK_MzGi2beUMlfy-VC0GZ1zwEW"
-      frameborder="0" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; picture-in-picture">
-    </iframe>
-
-    <div class="note">
-      🔊 Nếu bạn dùng điện thoại và không chọn được bài từ playlist: <br />
-      👉 <b><a href="https://www.youtube.com/playlist?list=PL8Re_5qcK_MzGi2beUMlfy-VC0GZ1zwEW" target="_blank" style="color:#93c5fd; text-decoration:underline;">Bấm vào đây để mở playlist trong tab mới</a></b>
+      <p id="stats"></p>
     </div>
   </div>
 
   <script>
+    function extractCommentId(url) {
+      try {
+        const params = new URL(url).searchParams;
+        return params.get("comment_id") || null;
+      } catch {
+        return null;
+      }
+    }
+
+    function isValidTarget(url) {
+      return !/\/videos\/|\/reel\/|\/watch\?/.test(url);
+    }
+
+    function cleanUrl(url) {
+      try {
+        const u = new URL(url);
+        u.searchParams.delete("comment_id");
+        return u.origin + u.pathname;
+      } catch {
+        return url;
+      }
+    }
+
+    function addCommentIdToUrl(url, commentId) {
+      try {
+        const base = cleanUrl(url);
+        return `${base}?comment_id=${commentId}`;
+      } catch {
+        return url;
+      }
+    }
+
     function processLinks() {
-      const link = document.getElementById("linkInput").value.trim();
-      const ids = document.getElementById("idInput").value.trim().split(/\n+/).filter(Boolean);
-      const resultBox = document.getElementById("output");
-      const countBox = document.getElementById("countResult");
+      const sourceLines = document.getElementById("sourceLinks").value.trim().split(/\n+/);
+      const targetLines = document.getElementById("targetLinks").value.trim().split(/\n+/);
+      const output = [];
 
-      const invalidPattern = /\/(videos|reels?)\/|\/watch(\?|\/)/i;
+      const commentIds = sourceLines
+        .map(line => extractCommentId(line))
+        .filter(id => id);
 
-      if (invalidPattern.test(link)) {
-        countBox.innerText = "⚠️ Link đã bị bỏ qua vì không hợp lệ (videos, reels, watch).";
-        resultBox.value = "";
-        return;
+      let validCount = 0, skipped = 0;
+
+      for (let i = 0; i < targetLines.length; i++) {
+        const target = targetLines[i];
+        const commentId = commentIds[i % commentIds.length];
+
+        if (!isValidTarget(target)) {
+          skipped++;
+          continue;
+        }
+
+        output.push(addCommentIdToUrl(target, commentId));
+        validCount++;
       }
 
-      const links = ids.map(id => `${link}?comment_id=${id}`);
-      resultBox.value = links.join("\n");
-      countBox.innerText = `✅ Đã tạo ${links.length} link comment hợp lệ.`;
+      document.getElementById("output").value = output.join("\n");
+      document.getElementById("stats").textContent = `✅ Đã tạo ${validCount} link hợp lệ, bỏ qua ${skipped} link (videos, reels, watch)`;
     }
 
     function copyResults() {
-      const output = document.getElementById("output").value;
-      if (!output.trim()) {
-        alert("Không có nội dung để copy!");
-        return;
-      }
-
-      navigator.clipboard.writeText(output)
-        .then(() => {
-          alert("✅ Đã copy kết quả vào clipboard!");
-        })
-        .catch(err => {
-          console.error("Lỗi khi copy:", err);
-          alert("❌ Không thể copy. Hãy copy thủ công.");
-        });
+      const out = document.getElementById("output");
+      out.select();
+      document.execCommand("copy");
+      alert("✅ Đã copy tất cả link đã xử lý!");
     }
   </script>
 </body>
